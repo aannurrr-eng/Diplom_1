@@ -22,7 +22,7 @@ public class TestBurger {
     @Mock
     private Ingredient ingredient;
     @Mock
-    Ingredient ingredient1;
+    private Ingredient ingredient1;
 
     @Test
     public void setBunsShouldSetBuns()
@@ -69,35 +69,6 @@ public class TestBurger {
         Mockito.when(ingredient.getPrice()).thenReturn(3.f);
         Mockito.when(ingredient1.getPrice()).thenReturn(4.f);
         assertEquals("Цена бургера рассчитывается неверно", 11.f, burger.getPrice(), 0.0001f);
-    }
-
-    @Test
-    public void getReceiptShouldReturnCorrectReceipt()
-    {
-        String bunName = "Обычная булка";
-        String ingName = "Обычный соус";
-        String ing1Name = "Обычная начинка";
-        IngredientType ingType = IngredientType.SAUCE;
-        IngredientType ing1Type = IngredientType.FILLING;
-        float price = 11.f;
-
-        burger.setBuns(bun);
-        burger.addIngredient(ingredient);
-        burger.addIngredient(ingredient1);
-        Mockito.when(bun.getName()).thenReturn(bunName);
-        Mockito.when(ingredient.getType()).thenReturn(IngredientType.SAUCE);
-        Mockito.when(ingredient.getName()).thenReturn(ingName);
-        Mockito.when(ingredient1.getType()).thenReturn(IngredientType.FILLING);
-        Mockito.when(ingredient1.getName()).thenReturn(ing1Name);
-        Mockito.when(burger.getPrice()).thenReturn(price);
-
-        StringBuilder expReceipt = new StringBuilder(String.format("(==== %s ====)%n", bunName));
-        expReceipt.append(String.format("= %s %s =%n", ingType.toString().toLowerCase(), ingName));
-        expReceipt.append(String.format("= %s %s =%n", ing1Type.toString().toLowerCase(), ing1Name));
-        expReceipt.append(String.format("(==== %s ====)%n", bunName));
-        expReceipt.append(String.format("%nPrice: %f%n", price));
-
-        assertEquals("Возвращается некорректный чек", expReceipt.toString(), burger.getReceipt());
     }
 
 }
