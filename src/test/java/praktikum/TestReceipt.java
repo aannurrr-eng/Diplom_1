@@ -13,20 +13,20 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class TestReceipt {
 
-    private IngredientType type1, type2;
+    private IngredientType firstType, secondType;
 
     Burger burger = new Burger();
 
     @Mock
     private Bun bun;
     @Mock
-    private Ingredient ingredient1;
+    private Ingredient firstIngredient;
     @Mock
-    private Ingredient ingredient2;
+    private Ingredient secondIngredient;
 
-    public TestReceipt(IngredientType type1, IngredientType type2) {
-        this.type1 = type1;
-        this.type2 = type2;
+    public TestReceipt(IngredientType firstType, IngredientType secondType) {
+        this.firstType = firstType;
+        this.secondType = secondType;
     }
 
     @Before
@@ -49,23 +49,23 @@ public class TestReceipt {
     public void getReceiptShouldReturnCorrectReceipt()
     {
         String bunName = "Обычная булка";
-        String ingName1 = "Ингредиент1";
-        String ingName2 = "Ингредиент2";
+        String firstIngName = "Первый ингредиент";
+        String secondIngName = "Второй ингредиент";
         float price = 11.f;
 
         burger.setBuns(bun);
-        burger.addIngredient(ingredient1);
-        burger.addIngredient(ingredient2);
+        burger.addIngredient(firstIngredient);
+        burger.addIngredient(secondIngredient);
         Mockito.when(bun.getName()).thenReturn(bunName);
-        Mockito.when(ingredient1.getType()).thenReturn(type1);
-        Mockito.when(ingredient1.getName()).thenReturn(ingName1);
-        Mockito.when(ingredient2.getType()).thenReturn(type2);
-        Mockito.when(ingredient2.getName()).thenReturn(ingName2);
+        Mockito.when(firstIngredient.getType()).thenReturn(firstType);
+        Mockito.when(firstIngredient.getName()).thenReturn(firstIngName);
+        Mockito.when(secondIngredient.getType()).thenReturn(secondType);
+        Mockito.when(secondIngredient.getName()).thenReturn(secondIngName);
         Mockito.when(burger.getPrice()).thenReturn(price);
 
         StringBuilder expReceipt = new StringBuilder(String.format("(==== %s ====)%n", bunName));
-        expReceipt.append(String.format("= %s %s =%n", type1.toString().toLowerCase(), ingName1));
-        expReceipt.append(String.format("= %s %s =%n", type2.toString().toLowerCase(), ingName2));
+        expReceipt.append(String.format("= %s %s =%n", firstType.toString().toLowerCase(), firstIngName));
+        expReceipt.append(String.format("= %s %s =%n", secondType.toString().toLowerCase(), secondIngName));
         expReceipt.append(String.format("(==== %s ====)%n", bunName));
         expReceipt.append(String.format("%nPrice: %f%n", price));
 

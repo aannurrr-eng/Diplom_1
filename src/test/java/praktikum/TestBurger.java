@@ -20,9 +20,9 @@ public class TestBurger {
     @Mock
     private Bun bun;
     @Mock
-    private Ingredient ingredient;
+    private Ingredient firstIngredient;
     @Mock
-    private Ingredient ingredient1;
+    private Ingredient secondIngredient;
 
     @Test
     public void setBunsShouldSetBuns()
@@ -34,15 +34,16 @@ public class TestBurger {
     @Test
     public void addIngredientShouldAddIngredient()
     {
-        burger.addIngredient(ingredient);
-        assertEquals("Количество ингредиентов в бургере отличается от количества добавленных ингредиентов", 1, burger.ingredients.size());
-        assertEquals("В бургер добавляется неверный ингредиент", ingredient, burger.ingredients.get(0));
+        burger.addIngredient(firstIngredient);
+        List<Ingredient> expectedIngredients = new ArrayList<>();
+        expectedIngredients.add(firstIngredient);
+        assertEquals("Ингредиент не добавляется в бургер", expectedIngredients, burger.ingredients);
     }
 
     @Test
     public void removeIngredientShouldRemoveIngredient()
     {
-        burger.addIngredient(ingredient);
+        burger.addIngredient(firstIngredient);
         burger.removeIngredient(0);
         assertTrue("Не удаляется ингредиент из бургера", burger.ingredients.isEmpty());
     }
@@ -50,12 +51,12 @@ public class TestBurger {
     @Test
     public void moveIngredientShouldMoveIngredient()
     {
-        burger.addIngredient(ingredient);
-        burger.addIngredient(ingredient1);
+        burger.addIngredient(firstIngredient);
+        burger.addIngredient(secondIngredient);
         burger.moveIngredient(1, 0);
         List<Ingredient> expectedIngredients = new ArrayList<>();
-        expectedIngredients.add(ingredient1);
-        expectedIngredients.add(ingredient);
+        expectedIngredients.add(secondIngredient);
+        expectedIngredients.add(firstIngredient);
         assertEquals("Ингредиент неправильно переставляется в списке ингредиентов", expectedIngredients, burger.ingredients);
     }
 
@@ -63,11 +64,11 @@ public class TestBurger {
     public void getPriceShouldReturnCorrectPrice()
     {
         burger.setBuns(bun);
-        burger.addIngredient(ingredient);
-        burger.addIngredient(ingredient1);
+        burger.addIngredient(firstIngredient);
+        burger.addIngredient(secondIngredient);
         Mockito.when(bun.getPrice()).thenReturn(2.f);
-        Mockito.when(ingredient.getPrice()).thenReturn(3.f);
-        Mockito.when(ingredient1.getPrice()).thenReturn(4.f);
+        Mockito.when(firstIngredient.getPrice()).thenReturn(3.f);
+        Mockito.when(secondIngredient.getPrice()).thenReturn(4.f);
         assertEquals("Цена бургера рассчитывается неверно", 11.f, burger.getPrice(), 0.0001f);
     }
 
