@@ -49,8 +49,8 @@ public class TestReceipt {
     public void getReceiptShouldReturnCorrectReceipt()
     {
         String bunName = "Обычная булка";
-        String ingName1 = "Обычный соус";
-        String ingName2 = "Обычная начинка";
+        String ingName1 = "Ингредиент1";
+        String ingName2 = "Ингредиент2";
         float price = 11.f;
 
         burger.setBuns(bun);
